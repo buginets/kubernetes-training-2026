@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-all-ingress
+spec:
+  podSelector:
+    matchLabels:
+      team: qa
+  ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            team: devops
+    ports: 
+      - protocol: ICMP
+        port: 80        
+  policyTypes:
+  - Ingress
+    

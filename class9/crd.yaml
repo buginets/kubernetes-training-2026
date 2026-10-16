@@ -1,0 +1,40 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: databases.myorg.com # will take it from plural below and group below. plural.group . in this case: databases.myorg.com
+spec:
+  group: myorg.com # we created this group , must have
+  scope: Namespaced # must have
+  names:
+    shortNames: # your choice
+    - db # k get db, you choice
+    plural: databases # k get databases , must have
+    singular: database # k get database. , must have
+    kind: Database  # what we are creating, for  ex like Deployment. in this case Database , must have
+  versions:
+  - name: v1
+    served: true  # store in etcd, it will be served by kubectl , must have
+    storage: true # store in etcd , cluter database, must have
+    schema: # body for our customresource (spec, container etc), we can how we would like to see body of yaml file, our resource
+      openAPIV3Schema:
+        type: object
+        properties: # must have, and everything under properties, we creted ourselves bases on what Db need to be created
+          spec:
+            type: object
+            properties:
+              engine:  # db need engine, so we added engine block
+                type: string # string because for example: mysql, dynamoDb, mariaDb
+              version: # we added version , beacuse we need to define which version of choosen DB we need
+                type: string # and its string because : "1.2.7", or latest
+              storageSize: 
+                type: string # like "1Gb"
+              replicas:
+                type: integer  # like 5  
+            required: # we can mention that block below required , in order to create db. your choice
+              - engine
+              - version
+              - storageSize
+              - replicas      
+
+
+

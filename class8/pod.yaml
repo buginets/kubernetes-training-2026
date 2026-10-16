@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wordpress
+spec:
+  containers:
+  - name: wordpress
+    image: wordpress
+    env:
+    - name: DBPASS
+      valueFrom:
+        secretKeyRef:
+          name: dotfile-secret
+          key: DBPASS
+    - name: DBUSER
+      valueFrom:
+        secretKeyRef:
+          name: dotfile-secret
+          key: DBUSER     

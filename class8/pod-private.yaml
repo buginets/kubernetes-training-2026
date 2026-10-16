@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wordpress
+spec:
+  containers:
+  - name: wordpress
+    image: buginets/my-image:2.0.0
+  imagePullSecrets: 
+  - name: my-secret  
